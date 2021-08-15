@@ -1,0 +1,29 @@
+*{
+    box-sizing: border-box;
+}
+body{
+    margin: 0;
+}
+select{
+    display: block;
+    height: 2rem;
+    width: 7rem;
+    margin: auto;
+}
+#title{
+    display: block;
+    width: 20rem;
+    height: 2rem;
+    margin: auto;
+}
+#content{
+    display: block;
+    margin: auto;
+    width: 25rem;
+    height: 15rem;
+}
+button{
+    display: block;
+    margin: auto;
+
+}

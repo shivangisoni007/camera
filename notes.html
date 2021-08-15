@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="notes.css">
+    <title>Document</title>
+</head>
+<body>
+        <select>
+            <option value="general notes">general notes</option>
+            <option value="placement notes">placement notes</option>
+            <option value="college notes">college notes</option>
+        </select>
+        <br>
+        <input id="title" placeholder="Title"/>
+        <br>
+        <input id="content"/>
+        <br>
+        <button id="submit">Submit</button>
+        <br>
+    
+    <script>
+        let submitBtn = document.querySelector("button");
+        let title = document.querySelector("#title");
+        let content = document.querySelector("#content"); 
+
+        submitBtn.addEventListener("click", function(){
+            if(content.value == "" || title.value == ""){
+                alert("please enter the content");
+                return;
+            }else{
+
+            }
+        })
+        
+        
+        let req = indexedDB.open("NotesDB", 1);
+        // indexedDB.open("Name of DB", version-of-db);
+        req.addEventListener("success", function(){
+            let accessToNotesDB = req.result;
+            // alert("db was opened successfully");
+        });
+
+        // upgrade event occures in 2 cases
+        // case 1: when we create a new db
+        // case 2: when you try to open a database which already exists with an incremented version
+        req.addEventListener("upgradeneeded", function(){
+            let accessToNotesDB = req.result;
+            accessToNotesDB.createObjectStore("generalNotes", {keyPath:"pId"})
+            accessToNotesDB.createObjectStore("placementNotes", {keyPath:"gId"})
+            accessToNotesDB.createObjectStore("collegeNotes", {keyPath:"cId"})
+
+            //  i can create an object store
+            // alert("db was updated/opened successfully");
+        });
+        req.addEventListener("error", function(){
+            // alert("error");
+        });
+
+        function addNotes(collectionName,obj){
+            obj = {
+                pId:12345,title:"abc",content:"xyz"
+            } 
+            let tx = db.transcation(collectionName,"readwrite")
+            let reqObjectStore = tx.objectStore(collectionName)
+            reqObjectStore.add(obj)
+        }
+
+
+    </script>
+</body>
+</html>
